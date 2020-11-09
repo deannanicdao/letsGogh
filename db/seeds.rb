@@ -13,8 +13,8 @@ admin_user = User.create!(email: ENV["ADMIN_EMAIL"], password: ENV["PASSWORD"])
 
 admin_user.add_role :admin
 
-# Item.destroy_all
+Item.destroy_all
 
-# item_1 = Item.new(title: 'Abstract 1', description: '2020 collection', price: 500, category: 'Abstract', availability: true, user_id: user_1.id)
-# item_1.image.attach(io: File.open('app/assets/images/artwork_1.jpg'), filename:'artwork_1.jpg')
-# item_1.save
+item_1 = Item.new(title: 'Abstract 1', description: '2020 collection', price: 500, category: 'Abstract', availability: true, user_id: user_1.id)
+item_1.image.attach(io: File.open('app/assets/images/artwork_1.jpg'), filename:'artwork_1.jpg')
+item_1.save

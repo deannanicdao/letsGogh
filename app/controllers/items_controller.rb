@@ -1,6 +1,7 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy]
 
+
   # GET /items
   # GET /items.json
   def index
@@ -69,6 +70,6 @@ class ItemsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def item_params
-      params.require(:item).permit(:title, :description, :price, :category, :availability, :user_id)
+      params.require(:item).permit(:title, :description, :price, :category, :availability, :user_id, :image)
     end
 end
