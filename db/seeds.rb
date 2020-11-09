@@ -5,3 +5,16 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+User.destroy_all
+
+user_1 = User.create!(email: ENV["USER_1_EMAIL"], password: ENV["PASSWORD"])
+user_2 = User.create!(email: ENV["USER_2_EMAIL"], password: ENV["PASSWORD"])
+admin_user = User.create!(email: ENV["ADMIN_EMAIL"], password: ENV["PASSWORD"])
+
+admin_user.add_role :admin
+
+# Item.destroy_all
+
+# item_1 = Item.new(title: 'Abstract 1', description: '2020 collection', price: 500, category: 'Abstract', availability: true, user_id: user_1.id)
+# item_1.image.attach(io: File.open('app/assets/images/artwork_1.jpg'), filename:'artwork_1.jpg')
+# item_1.save
