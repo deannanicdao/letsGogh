@@ -1,4 +1,6 @@
 class ItemsController < ApplicationController
+  before_action :authenticate_user!, except: [:index]
+  before_action :check_roles
   before_action :set_item, only: [:show, :edit, :update, :destroy]
 
 
@@ -66,6 +68,13 @@ class ItemsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_item
       @item = Item.find(params[:id])
+    end
+
+    def check_roles
+      if (user_signed_in? && !current_user.has_role?(:admin))
+        flash[:alert] = "You are not authorized to access that page."
+        redirect_to root_path
+      end
     end
 
     # Only allow a list of trusted parameters through.
