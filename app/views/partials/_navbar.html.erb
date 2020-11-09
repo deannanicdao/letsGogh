@@ -9,20 +9,16 @@
         <li class="nav-item active">
           <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
         </li>
+        <% if !user_signed_in? %>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+          <%= link_to 'Sign In', new_user_session_path, id: 'signin-link', class: 'nav-link' %>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
+        <% end %>
+        <% if (user_signed_in? && current_user.has_role?(:admin)) %>
+        <li>
+          <%= link_to 'Users', admin_users_path, id: 'admin-link', class: 'nav-link' %>
         </li>
+        <% end %>
         <li class="nav-item">
           <% if user_signed_in? %>
             <%= link_to "Log out", destroy_user_session_path, method: :delete, class: "nav-link" %>
