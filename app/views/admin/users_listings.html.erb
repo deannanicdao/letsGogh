@@ -27,10 +27,7 @@
         <td><%= item.user.email %></td>
         <td><%= image_tag item.image, class: "item-image-preview" %></td>
         <td><%= link_to 'Show', item %></td>
-        <% if can? :manage, item %>
-          <td><%= link_to 'Edit', edit_item_path(item) %></td>
-        <% end %>
-        
+        <td><%= link_to 'Delete Listing', @item, method: :delete, data: { confirm: 'Are you sure?' } %></td>      
       </tr>
     <% end %>
   </tbody>

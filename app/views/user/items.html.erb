@@ -23,10 +23,7 @@
         <!-- <td><%= item.user %></td> --> 
         <td><%= image_tag item.image, class: "item-image" %></td>
         <td><%= link_to 'Show', item %></td>
-        <% if can? :manage, item %>
-          <td><%= link_to 'Edit', edit_item_path(item) %></td>
-        <% end %>
-        
+        <td><%= link_to 'Edit', edit_item_path(item) %></td>
       </tr>
     <% end %>
   </tbody>

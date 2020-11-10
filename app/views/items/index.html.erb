@@ -23,10 +23,10 @@
         <!-- <td><%= item.user %></td> --> 
         <td><%= image_tag item.image, class: "item-image" %></td>
         <td><%= link_to 'Show', item %></td>
-        <% if can? :manage, item %>
-          <td><%= link_to 'Edit', edit_item_path(item) %></td>
+        <!-- FIGURE OUT HOW TO SHOW PURCHASE BUTTON ON ITEMS THAT DO NOT BELONG TO THE CURRENT_USER -->
+        <!-- <% if item.id != current_user.items %> -->
+          <td><%= link_to 'Purchase', item %></td>
         <% end %>
-        
       </tr>
     <% end %>
   </tbody>
