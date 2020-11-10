@@ -21,7 +21,7 @@
         <% end %>
         <% if user_signed_in? %>
           <li>
-            <%= link_to 'Your Listings', items_path, id: 'item-link', class: 'nav-link' %>
+            <%= link_to 'Your Listings', user_items_path, id: 'item-link', class: 'nav-link' %>
           </li>
           <li class="nav-item">
             <%= link_to "Log out", destroy_user_session_path, method: :delete, class: "nav-link" %>
