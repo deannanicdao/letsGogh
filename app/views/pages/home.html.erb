@@ -8,10 +8,10 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <a class="btn btn-primary btn-lg" href="items#show" role="button">Buy Art</a>  
+            <%= link_to "Buy Art", items_path, class: "btn btn-primary btn-lg" %>
         </div>
         <div class="col-md-6">
-            <a class="btn btn-primary btn-lg" href="items#create" role="button">Sell Art</a>
+            <%= link_to "Sell Art", new_item_path, class: "btn btn-primary btn-lg" %>
         </div>
     </div>
     <%= image_tag "enter.jpg", class: "enter-image"%>
