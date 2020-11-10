@@ -12,6 +12,9 @@ user_2 = User.create!(email: ENV["USER_2_EMAIL"], password: ENV["PASSWORD"])
 admin_user = User.create!(email: ENV["ADMIN_EMAIL"], password: ENV["PASSWORD"])
 
 admin_user.add_role :admin
+user_1.add_role :user
+user_2.add_role :user
+
 
 Item.destroy_all
 

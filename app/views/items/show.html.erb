@@ -1,37 +1,43 @@
 <p id="notice"><%= notice %></p>
 
+<h3>
+  <strong>Title:</strong>
+  <%= @item.title %>
+</h3>
 <table class="table">
-  <th>
-    <strong>Title:</strong>
-    <%= @item.title %>
-  </th>
-<tr>
-  
-</tr>
-  <p>
-    <strong>Description:</strong>
-    <%= @item.description %>
-  </p>
+    <tr>
+        <p>
+          <strong>Description:</strong>
+          <%= @item.description %>
+        </p>
 
-  <p>
-    <strong>Price:</strong>
-    <%= @item.price %>
-  </p>
+        <p>
+          <strong>Price:</strong>
+          <%= @item.price %>
+        </p>
 
-  <p>
-    <strong>Category:</strong>
-    <%= @item.category %>
-  </p>
+        <p>
+          <strong>Category:</strong>
+          <%= @item.category %>
+        </p>
 
-  <p>
-    <strong>Availability:</strong>
-    <%= @item.availability %>
-  </p>
+        <p>
+          <strong>Availability:</strong>
+          <%= @item.availability %>
+        </p>
 
-  <p>
-    <strong>User:</strong>
-    <%= @item.user_id %>
-  </p>
-  <%= link_to 'Edit', edit_item_path(@item) %> |
-  <%= link_to 'Back', items_path %>
+        <p>
+          <strong>User:</strong>
+          <%= @item.user.email %>
+        </p>
+      </tr>
+      <tr>
+        <p>
+          <%= image_tag @item.image, class: "item-image" %>
+        </p>
+      </tr>
+      <% if can? :manage, @item %>
+        <%= link_to 'Edit', edit_item_path(@item) %> |
+      <% end %>
+      <%= link_to 'Back', items_path %> |
 </table>

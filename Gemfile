@@ -59,3 +59,4 @@ gem 'simple_form'
 gem 'devise'
 gem 'rolify'
 gem "dotenv-rails", "~> 2.7"
+gem 'cancancan'

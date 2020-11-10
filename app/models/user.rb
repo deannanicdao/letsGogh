@@ -11,5 +11,4 @@ class User < ApplicationRecord
   def assign_default_role
     self.add_role(:user)
   end
-
 end

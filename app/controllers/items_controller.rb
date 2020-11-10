@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_roles, except: [:index]
   before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :check_roles, except: [:index, :show]
 
 
   # GET /items
@@ -13,6 +13,8 @@ class ItemsController < ApplicationController
   # GET /items/1
   # GET /items/1.json
   def show
+    # if @item.availability == true
+    # end
   end
 
   # GET /items/new
@@ -71,10 +73,11 @@ class ItemsController < ApplicationController
     end
 
     def check_roles
-      if (user_signed_in? && !current_user.has_role?(:admin))
-        flash[:alert] = "You are not authorized to access that page."
-        redirect_to root_path
-      end
+      return if user_signed_in? && current_user.has_role?(:admin)
+      return if user_signed_in? && current_user.has_role?(:user)
+      return if user_signed_in? && @item && @item.user == current_user 
+      flash[:alert] = "You are not authorized to access that page."
+      redirect_to root_path
     end
 
     # Only allow a list of trusted parameters through.

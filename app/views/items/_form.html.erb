@@ -3,12 +3,19 @@
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
+  <% if @item.image.attached? %>
+    <div>
+      <%= image_tag @item.image, class: "item-image-preview" %>
+    </div>
+  <% end %> 
+
   <div class="form-inputs">
     <%= f.input :title %>
     <%= f.input :description %>
     <%= f.input :price %>
-    <%= f.input :category %>
+    <%= f.input :category, collection: ["Abstract", "Pop-Culture", "OC", "Scenic", "Other"] %>
     <%= f.input :availability %>
+    <%= f.file_field :image %>
   </div>
 
   <div class="form-actions">

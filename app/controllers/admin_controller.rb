@@ -1,5 +1,7 @@
 class AdminController < ApplicationController
-    def users
-        @users = User.all
+    def users_listings
+        @items = Item.all
     end
+
+    
 end
