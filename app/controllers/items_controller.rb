@@ -68,6 +68,7 @@ class ItemsController < ApplicationController
   end
 
   def buy
+    p @item
     Stripe.api_key = ENV['STRIPE_API_KEY']
     session = Stripe::Checkout::Session.create({
       payment_method_types: ['card'],
@@ -79,9 +80,9 @@ class ItemsController < ApplicationController
           price_data: {
             currency: 'aud',
             product_data: {
-              name: 'Foo'
+              name: @item.title
             },
-            unit_amount: 300
+            unit_amount: (@item.price.to_f * 10).to_i
           },
           quantity: 1
         }
@@ -92,9 +93,11 @@ class ItemsController < ApplicationController
   end
 
   def success
+    render plain: "Success!"
   end
 
   def cancel
+    render plain: "The transaction was cancelled!"
   end
 
   private
