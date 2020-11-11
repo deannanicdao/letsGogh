@@ -1,8 +1,9 @@
 class OrderController < ApplicationController
-skip_before_action :verify_authenticity_token, only: [:buy]
-before_action :authenticate_user!, except: [:buy]
-before_action :set_item, only: [:buy]
-before_action :check_roles, except: [:buy]
+    skip_before_action :verify_authenticity_token, only: [:buy]
+    before_action :authenticate_user!, except: [:buy]
+    before_action :set_item, only: [:buy]
+    before_action :check_roles, except: [:buy]
+    
     def buy
         Stripe.api_key = ENV['STRIPE_API_KEY']
         session = Stripe::Checkout::Session.create({
