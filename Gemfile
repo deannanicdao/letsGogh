@@ -60,3 +60,4 @@ gem 'devise'
 gem 'rolify'
 gem "dotenv-rails", "~> 2.7"
 gem 'cancancan'
+gem "stripe", "~> 5.28"

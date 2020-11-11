@@ -1,7 +1,8 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!
-  before_action :set_item, only: [:show, :edit, :update, :destroy]
-  before_action :check_roles, except: [:index, :show]
+  skip_before_action :verify_authenticity_token, only: [:buy]
+  before_action :authenticate_user!, except: [:buy]
+  before_action :set_item, only: [:show, :edit, :update, :destroy, :buy]
+  before_action :check_roles, except: [:index, :show, :buy]
 
 
   # GET /items
@@ -64,6 +65,36 @@ class ItemsController < ApplicationController
       format.html { redirect_to items_url, notice: 'Item was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def buy
+    Stripe.api_key = ENV['STRIPE_API_KEY']
+    session = Stripe::Checkout::Session.create({
+      payment_method_types: ['card'],
+      mode: 'payment',
+      success_url: success_url(params[:id]),
+      cancel_url: cancel_url(params[:id]),
+      line_items: [
+        {
+          price_data: {
+            currency: 'aud',
+            product_data: {
+              name: 'Foo'
+            },
+            unit_amount: 300
+          },
+          quantity: 1
+        }
+      ]
+    })
+
+    render json: session
+  end
+
+  def success
+  end
+
+  def cancel
   end
 
   private

@@ -36,8 +36,21 @@
           <%= image_tag @item.image, class: "item-image" %>
         </p>
       </tr>
+
+
       <% if can? :manage, @item %>
         <%= link_to 'Edit', edit_item_path(@item) %> |
       <% end %>
+      <p><button id="purchase-button">Purchase</button></p>
+      <script src="https://js.stripe.com/v3/"></script>
+      
+      <script>
+        const stripe = Stripe('<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>')
+        const purchaseButton = document.getElementById('purchase-button')
+
+        purchaseButton.addEventListener('click', function() {
+           console.log(stripe)
+        })
+      </script>
       <%= link_to 'Back', items_path %> |
 </table>
