@@ -61,3 +61,6 @@ gem 'rolify'
 gem "dotenv-rails", "~> 2.7"
 gem 'cancancan'
 gem "stripe", "~> 5.28"
+
+gem "cloudinary", "~> 1.18"
+gem "activestorage-cloudinary-service", "~> 0.2.3"

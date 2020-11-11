@@ -32,3 +32,9 @@ local:
 #   service: Mirror
 #   primary: local
 #   mirrors: [ amazon, google, microsoft ]
+
+cloudinary:
+  service: Cloudinary
+  cloud_name: drlpdxmsc
+  api_key: 345717632919867
+  api_secret: lqtVLcWNnxslBydiHfG3JrIBPcM
