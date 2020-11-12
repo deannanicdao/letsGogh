@@ -1,5 +1,5 @@
-<p id="notice"><%= notice %></p> | 
-<p id="edit-profile"><%= link_to 'Edit Your Profile',  %></p>
+<p id="notice"><%= notice %></p>
+<p id="edit-profile"><%= link_to 'Edit Your Profile', edit_user_registration_path(current_user) %></p>
 
 <h1>Your Gallery</h1>
 
@@ -18,11 +18,9 @@
       <tr>
         <td><%= item.title %></td>
         <td><%= item.description %></td>
-        <td><%= item.price %></td>
+        <td><%= (item.price.to_i * 0.1) %></td>
         <td><%= item.category %></td>
-        <!-- Add a username/brand -->
-        <!-- <td><%= item.user %></td> --> 
-        <td><%= image_tag item.image, class: "item-image" %></td>
+        <td><%= cl_image_tag(item.image, :width=>100, cloud_name: 'drlpdxmsc', class: "item-image") %></td>
         <td><%= link_to 'Show', item %></td>
         <td><%= link_to 'Edit', edit_item_path(item) %></td>
       </tr>

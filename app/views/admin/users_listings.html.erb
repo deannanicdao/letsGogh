@@ -19,11 +19,15 @@
       <tr>
         <td><%= item.title %></td>
         <td><%= item.description %></td>
-        <td><%= item.price %></td>
+        <td><%= (item.price * 0.1).to_i %></td>
         <td><%= item.category %></td>
         <td><%= item.availability %></td>
         <td><%= item.user.email %></td>
-        <td><%= image_tag item.image, class: "item-image-preview" %></td>
+        <% if item.image.attached? %>
+          <td><%= cl_image_tag(item.image.key, :width=>100, crop: :scale, cloud_name: 'drlpdxmsc', class: "item-image") %></td>
+        <% else %>
+          <td><%= image_tag item.image, class: "item-image-preview" %></td>
+        <% end %>
         <td><%= link_to 'Show', item %></td>
         <td><%= link_to 'Delete Listing', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>      
       </tr>

@@ -17,25 +17,16 @@
       <tr>
         <td><%= item.title %></td>
         <td><%= item.description %></td>
-        <td><%= item.price %></td>
+        <td><%= (item.price * 0.1).to_i%></td>
         <td><%= item.category %></td>
-        <!-- Add a username/brand -->
-        <!-- <td><%= item.user %></td> --> 
-        <td><%= image_tag item.image, class: "item-image" %></td>
-        <td><%= link_to 'Show', item %></td>
-
-
-        <!-- FIGURE OUT HOW TO SHOW PURCHASE BUTTON ON ITEMS THAT DO NOT BELONG TO THE CURRENT_USER -->
-
-        
-        <!-- <% if item.id != current_user.items %> -->
-          <td><%= link_to 'Purchase', item %></td>
+        <% if item.image.attached? %>
+          <td><%= cl_image_tag(item.image.key, :width=>500, crop: :scale, cloud_name: 'drlpdxmsc', class: "item-image") %></td>
+        <% else %>
+          <td><%= image_tag item.image, class: "item-image" %></td>
         <% end %>
+        <td><%= link_to 'Show', item %></td>
+        <td><%= link_to 'Purchase', item %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<!-- <%= link_to 'New Item', new_item_path %> -->

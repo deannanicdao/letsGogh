@@ -5,7 +5,8 @@
 
   <% if @item.image.attached? %>
     <div>
-      <%= image_tag @item.image, class: "item-image-preview" %>
+      <p><%= cl_image_tag(@item.image.key, :width=>100, crop: :scale, cloud_name: 'drlpdxmsc', class: "item-image-preview") %></p>
+
     </div>
   <% end %> 
 
