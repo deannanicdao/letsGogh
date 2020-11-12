@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   devise_for :users
   root 'pages#home'
   get '/admin', to: 'admin#users_listings', as: 'admin_users_listings'
+  delete '/admin', to: 'admin#destroy', as: 'admin_delete'
   get '/user/items', to: 'user#items', as: 'user_items'
 
   post '/order/:id/buy', to: 'order#buy', as: 'buy'

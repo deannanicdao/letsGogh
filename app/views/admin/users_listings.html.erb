@@ -1,7 +1,5 @@
 <h1>Existing Listings</h1>
 
-<p id="notice"><%= notice %></p>
-
 <table class="table">
   <thead>
     <tr>
@@ -27,7 +25,7 @@
         <td><%= item.user.email %></td>
         <td><%= image_tag item.image, class: "item-image-preview" %></td>
         <td><%= link_to 'Show', item %></td>
-        <td><%= link_to 'Delete Listing', @item, method: :delete, data: { confirm: 'Are you sure?' } %></td>      
+        <td><%= link_to 'Delete Listing', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>      
       </tr>
     <% end %>
   </tbody>
