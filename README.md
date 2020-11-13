@@ -28,10 +28,27 @@ The repository for **Let's Gogh** can be accessed via this link: https://github.
 - Tech stack (e.g. html, css, deployment platform, etc)
 
 #### R12.	User stories for your app
++ Users can view all listings
+    + User has signed in to view all listings
+    + Users can purchase listings
++ Users can create, edit, show, delete their own listings
+    + Users must be signed in
+    + Listings must have an attached image
+    + Listings must specify a category
+    + Users can view their own listings
++ Users can create an account
+    + Users can edit their details
++ Admin users can view a dashboard of listings with associated user emails
+    + Admin users can delete existing listings (but not edit)
+
+#### Stretch Goals
++ Users can search for listings based on categories
++ Users can rate listings
++ Users can view their own ratings
 
 
 #### R13.	Wireframes for your app
-
+docs/siteMap.png
 
 #### R14.	An ERD for your app
 
