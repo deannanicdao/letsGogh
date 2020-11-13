@@ -17,7 +17,6 @@ user_1.add_role :user
 user_2.add_role :user
 
 
-
 item_1 = Item.new(title: 'Abstract 1', description: '2020 collection', price: 500, category: 'Abstract', availability: true, user_id: user_1.id)
 item_1.image.attach(io: File.open(File.join(Rails.root, 'app/assets/images/artwork_5.jpg')), filename:'artwork_5.jpg')
 item_1.save

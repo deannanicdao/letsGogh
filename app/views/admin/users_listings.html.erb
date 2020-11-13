@@ -24,7 +24,7 @@
         <td><%= item.availability %></td>
         <td><%= item.user.email %></td>
         <% if item.image.attached? %>
-          <td><%= cl_image_tag(item.image.key, :width=>100, crop: :scale, cloud_name: 'drlpdxmsc', class: "item-image") %></td>
+          <td><%= cl_image_tag(item.image.key, :width=>200, crop: :scale, cloud_name: 'drlpdxmsc', class: "item-image") %></td>
         <% else %>
           <td><%= image_tag item.image, class: "item-image-preview" %></td>
         <% end %>
