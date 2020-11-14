@@ -9,6 +9,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :items, dependent: :destroy
+  has_many :orders, dependent: :destroy
 
   def assign_default_role
     self.add_role(:user)

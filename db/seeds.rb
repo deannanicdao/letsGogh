@@ -8,9 +8,9 @@
 User.destroy_all
 Item.destroy_all
 
-user_1 = User.create!(email: ENV["USER_1_EMAIL"], password: ENV["PASSWORD"])
-user_2 = User.create!(email: ENV["USER_2_EMAIL"], password: ENV["PASSWORD"])
-admin_user = User.create!(email: ENV["ADMIN_EMAIL"], password: ENV["PASSWORD"])
+user_1 = User.create!(email: ENV["USER_1_EMAIL"], password: ENV["PASSWORD"], username: ENV["USER_1_USERNAME"])
+user_2 = User.create!(email: ENV["USER_2_EMAIL"], password: ENV["PASSWORD"], username: ENV["USER_2_USERNAME"])
+admin_user = User.create!(email: ENV["ADMIN_EMAIL"], password: ENV["PASSWORD"], username: ENV["ADMIN_USERNAME"])
 
 admin_user.add_role :admin
 user_1.add_role :user
