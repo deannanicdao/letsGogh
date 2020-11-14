@@ -198,7 +198,7 @@ Cloudinary is an image and video cloud hosting service that can dynamically opti
 	
 Heroku is a Platform as a Service (PaaS) where developers can deploy and run their applications. Developers can also manage, and scale their apps entirely in the cloud as it supports Ruby and other programming languages. The free service model of Heroku has allowed this application to be deployed through an attached git repository. 
 
-[Heorku](https://www.heroku.com/home)
+[Heroku](https://www.heroku.com/home)
 
 </details>
 

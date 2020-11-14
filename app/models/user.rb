@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  attr_accessor :login
 
   rolify
   after_create :assign_default_role
@@ -21,5 +22,14 @@ class User < ApplicationRecord
     return if password.blank? || password =~ /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,20}$/
 
     errors.add :password, 'Password complexity requirement not met.'
+  end
+
+  # Allow users to login with username or email
+  def self.find_for_database_authentication warden_condition
+    conditions = warden_condition.dup
+    login = conditions.delete(:login)
+    where(conditions).where(
+      ["lower(username) = :value OR lower(email) = :value",
+      { value: login.strip.downcase}]).first
   end
 end
