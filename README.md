@@ -258,17 +258,17 @@ The only component that interacts with the database are the models which form a 
 + User, Role, Ability
 	+ New users are registered (`new_user_registration_path`- GET) using Devise and are logged into a session as the `current_user` (`user_session_path` - POST)
 	+ After registration the users are redirected to the landing page (`root_path` - GET) where they can choose to either `Buy Art` (directed to the index of all listings via `items_path` - GET) or `Sell Art` (directed to creating a new listing via ` items_path` - POST) 
-	+ Users can only edit (`edit_item_path` GET; `items#update` PUT/PATCH) and delete (`items#destroy` - DELETE) their own listings
-	+ Users can also edit their own profile via the `Your Listings` option (`user_items_path` - GET) in the navbar and clicking `Edit Your Profile` (`edit_user_registration_path` - GET; `user_registration_path` - PATCH)
-	+ Users can logout of their session via the `Logout` option in the navbar (`destroy_user_session_path`)
-	+ The authentication of registered users are handled by Devise. Authorisation scope is handled by Rolify and CanCanCan where users are either an `admin` or a general `user`. Admins can view all users and their associated listings but can only show `(`admin_users_listings_path` - GET) or delete (`admin_delete_path` - DELETE) other listings via the navigation bar option `Users`.
+	+ Users can edit their own profile via the `Your Listings` option (`user_items_path` - GET) in the navbar and clicking `Edit Your Profile` (`edit_user_registration_path` - GET; `user_registration_path` - PATCH)
+	+ Users can logout of their session via the `Logout` option in the navbar (`destroy_user_session_path` - DELETE)
+	+ The authentication of registered users are handled by Devise. The authorisation scope is handled by Rolify and CanCanCan where users are either an `admin` or a general `user`. Admins can view all users and their associated listings but can only show(`admin_users_listings_path` - GET) or delete (`admin_delete_path` - DELETE) other listings via the navigation bar option `Users`.
 	+ Users must have one role but a role can belong to many users
 	+ Data sanitisation is implemented in each model to prevent SQL injection and maintain database integrity.
 + Item
-	+ Only registered users can view the existing items - this is to prevent theft of digital art
-	+ New listings can be created by the `current_user` and set a title, description, category and price
+	+ Only registered users can view the existing items - this is to provide a layer of security against theft of digital art
 	+ Users can have many items, and items belong to one user
-	+ An attached image of the listing is stored in Cloudify and handle by Active Storage
+	+ New listings can be created by the `current_user` and set a title, description, category and price (`new_item_path` - GET; `items#create` - POST)
+	+ Users can only edit (`edit_item_path` GET; `items#update` PUT/PATCH) and delete (`items#destroy` - DELETE) their own listings
+	+ An attached image of the listing is stored in Cloudify and handled by ActiveStorage that aids in preventing XSS for image attachments
 	+ Users can purchase items (`buy_path` - POST). This is handled externally by the Stripe API as the user is redirected to the Stripe transaction page where they input their credit card details. Once a transaction is successful or cancelled, the users are redirected to the item's show page (`success_path` or `cancel_path`- GET) 
 + Application Record
 	+ 

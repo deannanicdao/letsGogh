@@ -3,6 +3,7 @@ class OrderController < ApplicationController
     before_action :authenticate_user!, except: [:buy]
     before_action :set_item, only: [:buy]
     before_action :check_roles, except: [:buy]
+    include Rails.application.routes.url_helpers
     
     def buy
         Stripe.api_key = ENV['STRIPE_API_KEY']
@@ -29,7 +30,7 @@ class OrderController < ApplicationController
     end
 
     def success
-        flash[:alert] = "Thank you for your purchase!"
+        flash[:alert] = "Thank you for your purchase! Check your orders page for your new link."
         redirect_to item_path
     end
 

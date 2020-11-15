@@ -14,7 +14,7 @@
       <%= render "partials/navbar" %>
       <p class="notice"><%= notice %></p>
       <% if user_signed_in? %>
-        <h5>Welcome, <%= current_user.email %></h5>
+        <h5>Welcome, <%= current_user.username %></h5>
       <% end %>
       <%= yield %>
     </div>
