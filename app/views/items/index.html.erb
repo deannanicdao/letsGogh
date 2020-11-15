@@ -3,55 +3,36 @@
 <h1>The Gallery</h1>
 
 <table class="table">
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Description</th>
-      <th>Price</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
   <tbody>
-    <% @items.each do |item| %>
-      <tr>
-        <td><%= item.title %></td>
-        <td><%= item.description %></td>
-        <td><%= (item.price * 0.1).to_i%></td>
-        <td><%= item.category %></td>
-        <% if item.image.attached? %>
-          <td><%= cl_image_tag(item.image.key, :width=>500, crop: :scale, cloud_name: 'drlpdxmsc', class: "item-image") %></td>
-        <% else %>
-          <td><%= image_tag item.image, class: "item-image" %></td>
-        <% end %>
-        <td><%= link_to 'Show', item %></td>
-        <td><%= link_to 'Purchase', item %></td>
-      </tr>
+    <div class="row">
+      <% @items.each do |item| %>
+        <div class="col-md-4">
+          <div class="card" style="width: 18rem;">
+            <% if item.image.attached? %>
+              <%= cl_image_tag(item.image.key, :width=>100, cloud_name: 'drlpdxmsc', class: "item-image")%>
+            <% else %>
+              <%= image_tag item.image, class: "item-image" %>
+            <% end %>
+            <div class="card-body">
+              <h5 class="card-title"> <%= item.title %> </h5>
+              <p class="card-text item-description"><%= item.description %></p>
+            </div>
 
-      <div class="card" style="width: 18rem;">
-        <% if item.image.attached? %>
-          <%= cl_image_tag(item.image.key, :width=>100, cloud_name: 'drlpdxmsc', class: "item-image")%>
-        <% else %>
-          <%= image_tag item.image, class: "item-image" %>
-        <% end %>
-        <div class="card-body">
-          <h5 class="card-title"> <%= item.title %> </h5>
-          <p class="card-text"><%= item.description %></p>
-        </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">$<%= (item.price * 0.1).to_i %></li>
-          <li class="list-group-item"><%= item.category %></li>
-          <li class="list-group-item"></li><%= item.availability %></li>
-          <li class="list-group-item"></li><<%= item.user.email %></li>          
-        </ul>
-        <div class="card-body">
-          <a href="#" class="card-link"><%= link_to 'Show', item %></a>
-          <a href="#" class="card-link"><%= link_to 'Edit', edit_item_path(item) %></a>
-        </div>
-      </div>
-      <br>
-    <% end %>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">$<%= (item.price * 0.1).to_i %></li>
+              <li class="list-group-item"><%= item.category %></li>
+              <li class="list-group-item"><%= item.user.username %></li>          
+            </ul>
 
-    
+            <div class="card-body">
+              <a href="#" class="card-link"><%= link_to 'Show', item %></a>
+              <% if user_signed_in? && item && item.user == current_user %>
+                <a href="#" class="card-link"><%= link_to 'Edit', edit_item_path(item) %></a>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
   </tbody>
 </table>
