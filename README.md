@@ -148,6 +148,7 @@ Stripe gem is used to redirect the user to an online payment platform (Stripe). 
 </details>
 
 <details>
+
 	<summary>
 		<b> Cloudinary </b>
 	</summary>
@@ -206,12 +207,24 @@ Heroku is a Platform as a Service (PaaS) where developers can deploy and run the
 	<summary>
 		<b> Github</b>
 	</summary>
-	
-Last but not least it Github, a developers best friend. GitHub is a website and cloud-based service that helps developers store and manage their code, as well as track and control changes to their code.
+
+Github is where the remote repository where the centralised code source is stored. It allows for source control management where changes to the code are tracked and managed. As mentioned above, the remote repository is used as the source code for deployment via Heroku. 
 
 [Github](https://github.com/)
 
 </details>
+
+<details>
+	<summary>
+		<b> Stripe </b>
+	</summary>
+	
+Stripe is an online, cloud-based payment platform that can be implemented into applications and can track revenue data of business operations and prevent fraud. It streamlines the development of implementing payment process feature on an international level as Stripe deals with regulatory complexities that comes with finance.
+
+[Stripe](https://stripe.com/en-gb-us)
+</details>
+
+<details>
 
 #### R12.	User stories for your app :memo:
 + Users can view all listings
@@ -269,18 +282,12 @@ The only component that interacts with the database are the models which form a 
 	+ New listings can be created by the `current_user` and set a title, description, category and price (`new_item_path` - GET; `items#create` - POST)
 	+ Users can only edit (`edit_item_path` GET; `items#update` PUT/PATCH) and delete (`items#destroy` - DELETE) their own listings
 	+ An attached image of the listing is stored in Cloudify and handled by ActiveStorage that aids in preventing XSS for image attachments
-	+ Users can purchase items (`buy_path` - POST). This is handled externally by the Stripe API as the user is redirected to the Stripe transaction page where they input their credit card details. Once a transaction is successful or cancelled, the users are redirected to the item's show page (`success_path` or `cancel_path`- GET) 
+	+ Users can purchase items (`buy_path` - POST). This is handled externally by the Stripe API as the user is redirected to the Stripe transaction page where they input their credit card details. Once a transaction is successful or cancelled, the users are redirected to the item's show page with a notice of the transaction state (either success, `success_path` or cancel, `cancel_path`- GET) 
 + Application Record
 	+ 
 	+ 
 + Order
 + OrderItem 
-
-Ruby objects are transferred between the Models and the Views via the Controller. Each URL should correspond to a method in the Controller so that the requests from the application are handled by the designated Controller method. These are achieved through RESTful routes, where REST stands for "Representational State Transfer". The application contains the following RESTful routes: 
-+ 
-+ 
-+ 
-+ 
 
 #### R17.	Describe your projects models in terms of the relationships (active record associations) they have with each other
 

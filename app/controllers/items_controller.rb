@@ -4,7 +4,6 @@ class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy, :buy]
   before_action :check_roles, except: [:index, :show, :buy]
 
-
   # GET /items
   # GET /items.json
   def index
@@ -14,8 +13,6 @@ class ItemsController < ApplicationController
   # GET /items/1
   # GET /items/1.json
   def show
-    # if @item.availability == true
-    # end
   end
 
   # GET /items/new
@@ -67,6 +64,10 @@ class ItemsController < ApplicationController
     end
   end
 
+  def self.search(params)
+    where("LOWER(title) LIKE%?%", "%#{params}#")
+  end
+    
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_item
