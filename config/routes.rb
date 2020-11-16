@@ -10,6 +10,6 @@ Rails.application.routes.draw do
   post '/order/:id/buy', to: 'order#buy', as: 'buy'
   get '/order/:id/success', to: 'order#success', as: 'success'
   get '/order/:id/cancel', to: 'order#cancel', as: 'cancel'
-  # get '/order/purchases', to: 'order#purchases', as: 'purchases'
+  get '/order/show', to: 'order#show', as: 'order_show'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

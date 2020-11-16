@@ -1,8 +1,10 @@
 class OrderController < ApplicationController
     skip_before_action :verify_authenticity_token, only: [:buy]
     before_action :authenticate_user!, except: [:buy]
-    before_action :set_item, only: [:buy]
+    before_action :set_item, only: [:buy, :success, :cancel]
     before_action :check_roles, except: [:buy]
+
+    # To include the download link for the full resolution image we need to include url_helpers
     include Rails.application.routes.url_helpers
     
     def buy
@@ -30,8 +32,17 @@ class OrderController < ApplicationController
     end
 
     def success
+        # create a new instance of an order here (with buyer/seller)
+        @order = Order.create!(buyer_username: current_user.username, seller_username: @item.user.username, total: @item.price, item_id: @item.id, user_id: current_user.id)
+        # @item.save
         flash[:alert] = "Thank you for your purchase! Check your orders page for your new link."
         redirect_to item_path
+        # redirect_to item_path(@order) - add this for the download link to full resolution image
+    end
+
+    def show
+        @order = Order.find(params[:id])
+        @item = @order.item_id.item
     end
 
     def cancel
@@ -40,7 +51,7 @@ class OrderController < ApplicationController
     end
 
     private
-        def set_item
+    def set_item
         @item = Item.find(params[:id])
     end
 
@@ -52,8 +63,4 @@ class OrderController < ApplicationController
     redirect_to root_path
     end
 
-    # Only allow a list of trusted parameters through.
-    def item_params
-    params.require(:item).permit(:title, :description, :price, :category, :availability, :user_id, :image)
-    end
 end
