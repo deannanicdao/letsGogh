@@ -1,71 +1,73 @@
 <p class="alert"><%= alert %></p>
 
-<div class="media">
-  <% if @item.image.attached? %>
-          <%= cl_image_tag(@item.image.key, :width=>100, cloud_name: 'drlpdxmsc', class: "item-image-preview")%>
-        <% else %>
-          <%= image_tag @item.image, class: "item-image-preview" %>
-        <% end %>
-  <div class="media-body">
-    <h5 class="mt-0"><%= @item.title %></h5>
-    <tr class="mt-0-p">
-      <p>
-        <strong>Description:</strong>
-        <%= @item.description %>
-      </p>
+<div class="container px-lg-5">
+  <div class="row mx-lg-n5">
+    <div class="col py-3 px-lg-5 border bg-light">
+      <% if @item.image.attached? %>
+        <%= cl_image_tag(@item.image.key, :width=>100, cloud_name: 'drlpdxmsc', class: "item-image")%>
+      <% else %>
+        <%= image_tag @item.image, class: "item-image" %>
+      <% end %>
+    </div>
+    <div class="col py-3 px-lg-5">
+      <h5 class="mt-0"><%= @item.title %></h5>
+        <p>
+          <strong>Description:</strong>
+          <%= @item.description %>
+        </p>
 
-      <p>
-        <strong>Price:</strong>
-        $<%= (@item.price * 0.1).to_i %>
-      </p>
+        <p>
+          <strong>Price:</strong>
+          $<%= (@item.price * 0.1).to_i %>
+        </p>
 
-      <p>
-        <strong>Category:</strong>
-        <%= @item.category %>
-      </p>
+        <p>
+          <strong>Category:</strong>
+          <%= @item.category %>
+        </p>
 
-      <p>
-        <strong>Availability:</strong>
-        <%= @item.availability %>
-      </p>
+        <p>
+          <strong>Availability:</strong>
+          <%= @item.availability %>
+        </p>
 
-      <p>
-        <strong>User:</strong>
-        <%= @item.user.username %>
-      </p>
-    </tr>
+        <p>
+          <strong>User:</strong>
+          <%= @item.user.username %>
+        </p>
+        
+        <div class="edit-link">
+          <% if user_signed_in? && @item && @item.user == current_user %>
+            <button type="button" class="btn btn-info"><%= link_to 'Edit', edit_item_path(@item) %></button>
+          <% end %>
+        
+          <button type="button" class="btn btn-info" id="buynow-button">Purchase</button>
+        
+          <script src="https://js.stripe.com/v3/"></script>
+        
+          <script defer>
+            const buyButton = document.getElementById('buynow-button')
+              buyButton.addEventListener('click', function(){
+        
+                const stripe = Stripe('<%= ENV["STRIPE_PUBLISHABLE_KEY"] %>')
+                // console.log(stripe)
+                  fetch('<%= buy_path(@item.id) %>', { 
+                      method: 'POST' 
+                  })
+                  .then(function(response) {
+                      return response.json()
+                  })
+                  .then(function(session) {
+                      return stripe.redirectToCheckout({ sessionId: session.id })
+                  })
+              })
+          </script>
+        <button type="button" class="btn btn-info"><%= link_to 'Back', items_path %></button>
+        </div>
+        <div>
+        </div>
+        
+    </div>
   </div>
 </div>
-
-
-
-<div class="edit-link">
-  <% if can? :manage, @item %>
-    <%= link_to 'Edit', edit_item_path(@item) %> |
-  <% end %>
-
-  <p><button id="buynow-button">Purchase</button></p>
-
-  <script src="https://js.stripe.com/v3/"></script>
-
-  <script defer>
-    const buyButton = document.getElementById('buynow-button')
-      buyButton.addEventListener('click', function(){
-
-        const stripe = Stripe('<%= ENV["STRIPE_PUBLISHABLE_KEY"] %>')
-        // console.log(stripe)
-          fetch('<%= buy_path(@item.id) %>', { 
-              method: 'POST' 
-          })
-          .then(function(response) {
-              return response.json()
-          })
-          .then(function(session) {
-              return stripe.redirectToCheckout({ sessionId: session.id })
-          })
-      })
-  </script>
-</div>
-
-  <%= link_to 'Back', items_path %> |
   

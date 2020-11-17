@@ -1,22 +1,29 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/">Lets Gogh</a>
-  
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
+
+
+  <nav class="navbar navbar-expand-md navbar-light bg-transparent sticky-top">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <span id="logo"><%= link_to "Let's Gogh", root_path, class: "navbar-brand" %></span>
+      <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+        <%# If user is not signed in, show a sign-in link %>
         <% if !user_signed_in? %>
         <li class="nav-item">
           <%= link_to 'Sign In', new_user_session_path, id: 'signin-link', class: 'nav-link' %>
         </li>
         <% end %>
+        <%# If user is signed in, show all other navbar options %>
+        <% if (user_signed_in? && current_user.has_role?(:admin)) %>
         <li>
           <%= link_to 'Browse All Listings', items_path, id: 'item-link', class: 'nav-link' %>
         </li>
-        <% if (user_signed_in? && current_user.has_role?(:admin)) %>
+        <%# If user is an admin, show user listings navlink %>
         <li>
           <%= link_to 'Users', admin_users_listings_path, id: 'admin-link', class: 'nav-link' %>
         </li>
-        <% end %>
-        <% if user_signed_in? %>
+          <% end %>
+          <% if user_signed_in? %>
           <li>
             <%= link_to 'Your Listings', user_items_path, id: 'item-link', class: 'nav-link' %>
           </li>
@@ -28,9 +35,6 @@
           </li>
           <% end %>
       </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
     </div>
   </nav>
+  
