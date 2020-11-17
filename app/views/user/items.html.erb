@@ -9,7 +9,9 @@
       <th>Title</th>
       <th>Description</th>
       <th>Price</th>
-      <th colspan="3"></th>
+      <th>Category</th>
+      <th>Preview</th>
+      <th>Options</th>
     </tr>
   </thead>
 
@@ -25,12 +27,12 @@
         <% else %>
           <td><%= image_tag item.image, class: "item-image-preview" %></td>
         <% end %>
-        <td><%= link_to 'Show', item %></td>
-        <td><%= link_to 'Edit', edit_item_path(item) %></td>
+        <td>
+          <%= link_to 'Show', item %>
+          <br>
+          <%= link_to 'Edit', edit_item_path(item) %>
+        </td>
       </tr>
-
-
-      
     <% end %>
   </tbody>
 </table>

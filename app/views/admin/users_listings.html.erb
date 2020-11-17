@@ -7,8 +7,8 @@
       <th>Description</th>
       <th>Price</th>
       <th>Category</th>
-      <th>Availability</th>
       <th>User</th>
+      <th>User Email</th>
       <th>Preview</th>
       <th colspan="3"></th>
     </tr>
@@ -21,7 +21,6 @@
         <td><%= item.description %></td>
         <td><%= (item.price * 0.1).to_i %></td>
         <td><%= item.category %></td>
-        <td><%= item.availability %></td>
         <td><%= item.user.username %></td>
         <td><%= item.user.email %></td>
         <% if item.image.attached? %>
@@ -35,4 +34,8 @@
     <% end %>
   </tbody>
 </table>
+
+<div class="paginate">
+  <%= will_paginate @items %>
+</div>
 

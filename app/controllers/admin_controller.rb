@@ -4,15 +4,15 @@ class AdminController < ApplicationController
     before_action :check_roles, except: [:index, :show, :destroy]
 
     def users_listings
-        @items = Item.all
+      @items = Item.paginate(:page => params[:page])
     end
 
     def destroy
-        @item.destroy
-        respond_to do |format|
-          format.html { redirect_to items_url, notice: 'Item was successfully destroyed.' }
-          format.json { head :no_content }
-        end
+      @item.destroy
+      respond_to do |format|
+        format.html { redirect_to items_url, notice: 'Item was successfully destroyed.' }
+        format.json { head :no_content }
+      end
     end
 
     private
