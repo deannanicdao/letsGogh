@@ -21,7 +21,7 @@
         <td><%= (item.price.to_i * 0.1) %></td>
         <td><%= item.category %></td>
         <% if item.image.attached? %>
-          <td><%= cl_image_tag(item.image.key, :width=>200, crop: :scale, cloud_name: 'drlpdxmsc', class: "item-image") %></td>
+          <td><%= cl_image_tag(item.image.key, :width=>200, crop: :scale, cloud_name: 'drlpdxmsc', class: "item-image-preview") %></td>
         <% else %>
           <td><%= image_tag item.image, class: "item-image-preview" %></td>
         <% end %>
