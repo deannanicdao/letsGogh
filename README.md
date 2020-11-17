@@ -2,7 +2,7 @@
 ### Deanna Nicdao
 
 #### R7.	Identification of the problem you are trying to solve by building this particular marketplace app.
-It's been known that the road to success in art is a narrow one, largely due to the subjective nature of the market. This creates a tough environment for artists to successfully sell their artworks let alone acquire the funds for real estate to host art exhibitions and maintain a rental studio space. One approach to minimise costs is for artists is to exhibit their work online and create home studio spaces.
+It's been known that the road to success in art is a narrow one, as it depends on the subjective interests of the market. This creates a tough environment for artists to successfully sell their artworks let alone acquire the funds for real estate to host art exhibitions and maintain a rental studio space. One approach to minimise costs is for artists is to exhibit their work online and create home studio spaces.
 
 The internet has led to the increased exposure of art to a broader, even global, audience on several platforms, such as Etsy and Shopify. Etsy is a creative marketplace where craft supplies, homemade goods and vintage items can be sold. In contrast, Shopify is an eCommerce platform where general goods can be sold and their marketing, sales and operations can be managed. With access to such platforms, more and more artists have embraced digital technology for its benefits of increasing their marketability and creating a convenient platform for their client interactions. 
 
@@ -103,6 +103,16 @@ Bootstrap, once used for Twitter as *Twitter Blueprint*, is a popular front-end 
 JavaScript is a compiled programming language that is prototype-based, multi-paradigm, single-threaded, dynamic language and supports object-oriented, imperative, and declarative (*e.g.*, functional programming) languages. It runs on the client side of the web and is widely used for controller web page behaviour by functioning as a procedural and object oriented language. Objects are programmatically created with attached methods and properties. Once constructed, the object can be used a template or prototype for creating similar objects.
 
 [Javascript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+</details>
+
+<details>
+	<summary>
+		<b> Postman </b>
+	</summary>
+	
+Postman...
+
+[Postman](...)
 </details>
 
 ### Ruby Gems :gem:
@@ -237,6 +247,7 @@ Stripe is an online, cloud-based payment platform that can be implemented into a
     + Users can view their own listings
 + Users can create an account
     + Users can edit their details
+	+ Users can login with their email or username
 + Admin users can view a dashboard of listings with associated user emails
     + Admin users can delete existing listings (but not edit)
 

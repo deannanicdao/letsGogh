@@ -66,3 +66,4 @@ gem "cloudinary", "~> 1.18"
 gem "activestorage-cloudinary-service", "~> 0.2.3"
 gem 'will_paginate', '~> 3.3'
 gem 'active_storage_validations', '~> 0.9.0'
+gem 'ransack'
