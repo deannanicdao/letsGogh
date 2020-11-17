@@ -9,5 +9,5 @@ class Item < ApplicationRecord
   # has_many :order_items
   # has_many :orders, through: :order_items, dependent: :destroy
   has_one_attached :image, dependent: :destroy
-  has_one :order
+  has_many :orders, dependent: :destroy
 end

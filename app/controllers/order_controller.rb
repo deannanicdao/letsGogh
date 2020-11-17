@@ -6,6 +6,11 @@ class OrderController < ApplicationController
 
     # To include the download link for the full resolution image we need to include url_helpers
     include Rails.application.routes.url_helpers
+
+    def index
+        @orders = current_user.orders
+        @items = @orders.map { |order| order.item }
+    end
     
     def buy
         Stripe.api_key = ENV['STRIPE_API_KEY']
@@ -35,14 +40,9 @@ class OrderController < ApplicationController
         # create a new instance of an order here (with buyer/seller)
         @order = Order.create!(buyer_username: current_user.username, seller_username: @item.user.username, total: @item.price, item_id: @item.id, user_id: current_user.id)
         # @item.save
-        flash[:alert] = "Thank you for your purchase! Check your orders page for your new link."
-        redirect_to item_path
+        flash[:alert] = "Thank you for your purchase! You now have access to the full resolution image."
+        redirect_to orders_path
         # redirect_to item_path(@order) - add this for the download link to full resolution image
-    end
-
-    def show
-        @order = Order.find(params[:id])
-        @item = @order.item_id.item
     end
 
     def cancel
