@@ -7,7 +7,8 @@ class ItemsController < ApplicationController
   # GET /items
   # GET /items.json
   def index
-    @items = Item.all
+    # @items = Item.all
+    @items = Item.paginate(:page => params[:page])
   end
 
   # GET /items/1

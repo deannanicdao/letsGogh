@@ -8,7 +8,7 @@ class OrderController < ApplicationController
     include Rails.application.routes.url_helpers
 
     def index
-        @orders = current_user.orders
+        @orders = current_user.orders.paginate(:page => params[:page])
         @items = @orders.map { |order| order.item }
     end
     

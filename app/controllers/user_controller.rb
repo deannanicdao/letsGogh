@@ -4,5 +4,4 @@ class UserController < ApplicationController
       @items = current_user.items
   end
 
- 
 end
