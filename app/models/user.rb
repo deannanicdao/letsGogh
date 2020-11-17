@@ -13,10 +13,10 @@ class User < ApplicationRecord
     }
   
   # Validates that email is not already taken when a new account is created
-  validates :email, uniqueness: true, on: :create
+  validates :email, uniqueness: true, on: :sign_up
   
   # Validates that email is not already taken when an account is updated
-  validates :email, uniqueness: true, on: :update
+  validates :email, uniqueness: true, on: :account_update
 
 
   rolify
