@@ -5,7 +5,7 @@ class UserController < ApplicationController
 
   # Controller action to view a user's own listings
   def items
-      @items = current_user.items
+      @items = current_user.items.paginate(:page => params[:page])
   end
 
 end
