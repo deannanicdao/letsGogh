@@ -1,5 +1,7 @@
 class User < ApplicationRecord
   attr_accessor :login
+  has_many :items, dependent: :destroy
+  has_many :orders, dependent: :destroy
 
   # Validate username uniqueness and send a message when it's already taken.
   # object = person object being validated
@@ -28,9 +30,6 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-
-  has_many :items, dependent: :destroy
-  has_many :orders, dependent: :destroy
 
   def assign_default_role
     self.add_role(:user)

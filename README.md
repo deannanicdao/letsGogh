@@ -29,9 +29,26 @@ The target audience is kept specific to digital artists to ensure an efficient u
 Users can also purchase existing listings and will be redirected to stripe. Once the transaction is complete, they will be redirected back to the item's show page with a message notifying the user whether the transaction was successful or cancelled. 
 
 #### Sitemap :microscope:
-![Site Map](docs/siteMap.png)
+![Site Map](docs/LetsGoghSiteMap.png)
 
 #### Screenshots :camera:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #### Tech stack (e.g. html, css, deployment platform, etc) :cd:
@@ -110,9 +127,9 @@ JavaScript is a compiled programming language that is prototype-based, multi-par
 		<b> Postman </b>
 	</summary>
 	
-Postman...
+Postman is an API client that was used to create and save HTTP/s requests and to read the responses. It made testing efficient without using the browser and test if specific params were being passed. 
 
-[Postman](...)
+[Postman](https://www.postman.com/)
 </details>
 
 ### Ruby Gems :gem:
@@ -188,6 +205,16 @@ Dotenv is used for securely storing sensitive information that is accessed by th
 [Devise Gem](https://www.rubydoc.info/gems/dotenv/2.1.1)
 </details>
 
+<details>
+	<summary>
+		<b> Will Paginate </b>
+	</summary>
+
+This gem was used to provide a maximum limit for the number of listings to display per page. This was used on items and orders to prevent overloading the browser with too many items.
+
+[Will Paginate Gem](https://www.rubydoc.info/gems/will_paginate/3.1.0)
+</details>
+
 #### R16.	Detail any third party services that your app will use
 ### Third Party Services
 
@@ -234,7 +261,6 @@ Stripe is an online, cloud-based payment platform that can be implemented into a
 [Stripe](https://stripe.com/en-gb-us)
 </details>
 
-<details>
 
 #### R12.	User stories for your app :memo:
 + Users can view all listings
@@ -256,26 +282,14 @@ Stripe is an online, cloud-based payment platform that can be implemented into a
 + Users can rate listings
 + Users can view their own ratings
 
-
 #### R13.	Wireframes for your app :pencil2:
-
+![Wire Frames of Landing Page](docs/...)
+![Wire Frames of Gallery Listings](docs/...)
 
 #### R14.	An ERD for your app
-![ERD](docs/T2A2_MVC_Database_ERD(1).png)
+![ERD](docs/T2A2_MVP_Database_ERD.png)
 
 #### R15.	Explain the different high-level components (abstractions) in your app
-The back end is responsible for:
-
-    Handling user requests
-    Interacting with the database to retrieve the necessary info.
-    Sending that info. off to the front end
-
-And the front end is responsible for:
-
-    Displaying the information it receives from the back end in a readable manner
-    Rendering the pages the user sees in their browser
-    Added any user interactivity functionality
-
 *Let's Gogh* is a two-sided marketplace app built on the Rails framework which follows the Model/View/Controller (MVC) architecture. MVC separates responsibilities and allows for clarity in development design. RESTful routes are also utilised where REST stands for "Representational State Transfer". By using MVC architecture with RESTful routes upscalability is facilitated as each MVC file has a distinct responsibility and therefore can be updated or debugged accordingly.
 
 The only component that interacts with the database are the models which form a bridge between the Postgres relational database and the controllers. Each model object has a corresponding record in the database. The table (termed, relation) within a database is the plural version of the Model's class name by convention. Each of these models will have a relation within the database that is labelled in the plural form, *e.g.*, users relation for the User model. This model queries or writes to this 'users' relation. Several models are utilised to normalise the database, as listed here:
@@ -294,19 +308,30 @@ The only component that interacts with the database are the models which form a 
 	+ Users can only edit (`edit_item_path` GET; `items#update` PUT/PATCH) and delete (`items#destroy` - DELETE) their own listings
 	+ An attached image of the listing is stored in Cloudify and handled by ActiveStorage that aids in preventing XSS for image attachments
 	+ Users can purchase items (`buy_path` - POST). This is handled externally by the Stripe API as the user is redirected to the Stripe transaction page where they input their credit card details. Once a transaction is successful or cancelled, the users are redirected to the item's show page with a notice of the transaction state (either success, `success_path` or cancel, `cancel_path`- GET) 
-+ Application Record
-	+ 
-	+ 
 + Order
-+ OrderItem 
+	+ Any logged in user can order an existing item
+	+ Once the stripe payment has been processed, the order instance in the `buy` method is captured and stored in an orders table
+	+ The orders are then viewable by the `current_user` via the `My Purchases` tab in the navbar (`orders#index` - GET)
 
 #### R17.	Describe your projects models in terms of the relationships (active record associations) they have with each other
+
+##### Users
++ Users have a PK `userId` which is linked to FK to Orders and Items through a `one to many` relationship 
+	+ This ensures that if a user is deleted, their associated items and orders will also be destroyed (via `dependent: :destroy`) to avoid orphan records as they `belong to` the User
++ The PK `userId` is also associated to `Roles` as a FK through the joining table `UserRoles` which also contains the FK, `roleId`, which references the `Roles` table
+	+ In this application, a user is designated a single role - either admin or a general user but with this set-up, users could be assigned to several roles in future design
+
+##### Items
++ The PK, `ItemId` is associated to Categories, Orders and Images (via Active Storage Attachments)
 
 
 #### R18.	Discuss the database relations to be implemented in your application
 
 
 #### R19.	Provide your database schema design
+All tables, fields, and relationships adequately represent an appropriate solution.
+Implemented models each serve a single purpose, contain appropriate fields and relationships. There may be a little duplication.
+
 
 
 #### R20.	Describe the way tasks are allocated and tracked in your project
