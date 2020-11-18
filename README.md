@@ -315,6 +315,8 @@ The only component that interacts with the database are the models which form a 
 
 #### R17.	Describe your projects models in terms of the relationships (active record associations) they have with each other
 
+The two centralised models in this application are Users and Items; the relations to these will be elaborated below:
+
 ##### Users
 + Users have a PK `userId` which is linked to FK to Orders and Items through a `one to many` relationship 
 	+ This ensures that if a user is deleted, their associated items and orders will also be destroyed (via `dependent: :destroy`) to avoid orphan records as they `belong to` the User
@@ -323,6 +325,9 @@ The only component that interacts with the database are the models which form a 
 
 ##### Items
 + The PK, `ItemId` is associated to Categories, Orders and Images (via Active Storage Attachments)
+	+ Items has a strict `one to one` relation with Categories as an initial version for the MVP; for future design, the separation Categories from Items leaves the option to change the relationship to `one to many` between Items and Categories if the developers choose to allow several categories per item
+	+ Items also has a `one to one` relation with the Image; the attachment is separated to deal with uploads - this maintains a normalised structure by separating the functions of storing attributes of an Item and the upload attributes that come with Active Storage
+	+ As mentioned above, Items has a `one to many` optional relation with Orders to allow users to purchase an item more than once, if they wish to do so, and associates this instance back to the User
 
 
 #### R18.	Discuss the database relations to be implemented in your application
