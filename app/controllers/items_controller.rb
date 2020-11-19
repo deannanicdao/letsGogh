@@ -29,6 +29,7 @@ class ItemsController < ApplicationController
   def create
     @item = Item.new(item_params)
     @item.user_id = current_user.id
+    @item.price = @item.price.to_i * 10
     respond_to do |format|
       if @item.save
         format.html { redirect_to @item, notice: 'Item was successfully created.' }
