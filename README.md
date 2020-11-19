@@ -314,14 +314,75 @@ The only component that interacts with the database are the models which form a 
 	+ The orders are then viewable by the `current_user` via the `My Purchases` tab in the navbar (`orders#index` - GET)
 
 #### R17.	Describe your projects models in terms of the relationships (active record associations) they have with each other
+In this application, a relational database structure was utilised where duplicate data sets are reduced by creating relationships between data tables and can be:
+##### (i) One-to-one:
+Both tables only have a single record of each side of the relationship. Each primary key either relates to one or none in the related table. 
+##### (ii) One-to-many:
+The primary key table contains one record which relates to none, one or many records in the related table.
+##### (iii) Many-to-many:
+Either side of the relationship can relate to none or any number of records. This relationship requires an associate/linking table between them as it cannot be accommodated by the relational model.
 
-The two centralised models in this application are Users and Items; the relations to these will be elaborated below:
+Each model (table) was aimed to serve a single purpose and represent a single entity to achieve a normalised structure. The centralised model in this application are Users as no other entity should exist without an existing User association. The models are elaborated below:
+
+##### User Model
+```ruby
+has_many :items, dependent: :destroy
+has_many :orders, dependent: :destroy
+```
+A user can have many items and orders but an item or an order can only exist if a user instance is attached. Hence, `dependent: :destroy` is required for both associated models to prevent orphaning records of Items/Orders if a User instance is destroyed.  
+
+##### Item Model
+```ruby
+# Validate and associate that an item must belong to a user
+belongs_to :user 
+validates :user, presence: true
+
+# Association with an item has one artwork attached and its presence is validated via Active Storage Validations gem
+has_one_attached :image, dependent: :destroy
+validates :image, attached: true
+
+# Association (one to many - item to orders) with orders and items is validated and if an item is destroyed, all its associated orders are also destroyed
+has_many :orders, dependent: :destroy, inverse_of: :item
+```
+
+As mentioned above, an item must belong to a user. The dependency is mandatory on this end as an item cannot exist without a user but a user can exist without an item (buyer only). Another constraint is that one image must be attached. Items have an optional many association to Orders, as an item can exist without or with one or many orders. However, if an item is destroyed, its associated attached image and any existing orders must also be deleted (*i.e.*, `dependent: :destroy`). 
+
+##### Order Model
+```ruby
+belongs_to :user
+validates :user, presence: true
+belongs_to :item
+validates :item, presence: true
+```
+The Order model only has mandatory relationships with Users and Models as each instance of an Order must `belong to` a User and an Item. This is to allow the buyer to access a record of their own orders (User to Order association), as well as the seller to access a record of their sold items (User to Item association). Both associations (buyer and seller perspectives) are required to exist for and order to take place. 
+
+##### Role Model
+```ruby
+has_and_belongs_to_many :users, :join_table => :users_roles
+  
+belongs_to :resource,
+	:polymorphic => true,
+	:optional => true
+
+
+validates :resource_type,
+	:inclusion => { :in => Rolify.resource_types },
+	:allow_nil => true
+
+scopify
+```
+The Role Model was generated using the Rolify gem. It is polymorphic and therefore can have or belong to many users (the resource). For a many to many relation to work in a relational database, a joining table must exist between the two parties. Thus the Roles model can access the User model records through the joining table `UserRoles`. 
+
+#### R18.	Discuss the database relations to be implemented in your application
+This application used a relational database on PostgresQL. Each bit of information in a relational database is represented as an attribute and is assigned a row with a unique ID (key). The set of values within a row must have a *relation* to one another in some way whilst conforming to the *attributes* (columns) of the table. A table can access another table's records so long as it has a foreign key that matches the other table's primary key. The foreign key constraint must be satisfied before any data manipulation actions can occur. This prevents entry of invalid data types (if it is not present in the FK column) or actions that would destroy links between associated tables. Implementation of this maintains referential integrity between tables. 
+
+As mentioned above, *Let's Gogh* contains one centralised model, Users, in which its only mandatory association is a role. The PK `userId` is also associated to `Roles` as a FK through the joining table `UserRoles` which also contains the FK, `roleId`, which references the `Roles` table. In this application, every new user instance is automatically assigned as a general user by default. At the moment, existing users are designated a single role - either admin or a general user. However the entities are normalised and users could be assigned to several roles in future design. 
+
+The non-mandatory associations to Users are further elaborated upon below, along with the associations with the Items model.
 
 ##### Users
 + Users have a PK `userId` which is linked to FK to Orders and Items through a `one to many` relationship 
 	+ This ensures that if a user is deleted, their associated items and orders will also be destroyed (via `dependent: :destroy`) to avoid orphan records as they `belong to` the User
-+ The PK `userId` is also associated to `Roles` as a FK through the joining table `UserRoles` which also contains the FK, `roleId`, which references the `Roles` table
-	+ In this application, a user is designated a single role - either admin or a general user but with this set-up, users could be assigned to several roles in future design
 
 ##### Items
 + The PK, `ItemId` is associated to Categories, Orders and Images (via Active Storage Attachments)
@@ -329,15 +390,87 @@ The two centralised models in this application are Users and Items; the relation
 	+ Items also has a `one to one` relation with the Image; the attachment is separated to deal with uploads - this maintains a normalised structure by separating the functions of storing attributes of an Item and the upload attributes that come with Active Storage
 	+ As mentioned above, Items has a `one to many` optional relation with Orders to allow users to purchase an item more than once, if they wish to do so, and associates this instance back to the User
 
-
-#### R18.	Discuss the database relations to be implemented in your application
-
-
 #### R19.	Provide your database schema design
-All tables, fields, and relationships adequately represent an appropriate solution.
-Implemented models each serve a single purpose, contain appropriate fields and relationships. There may be a little duplication.
+##### Users
+```ruby
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "username"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+```
 
+##### User Roles
+```ruby
+    t.bigint "user_id"
+    t.bigint "role_id"
+    t.index ["role_id"], name: "index_users_roles_on_role_id"
+    t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
+    t.index ["user_id"], name: "index_users_roles_on_user_id"
+```
 
+##### Roles
+```ruby
+    t.string "name"
+    t.string "resource_type"
+    t.bigint "resource_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
+    t.index ["resource_type", "resource_id"], name: "index_roles_on_resource_type_and_resource_id"
+```
+
+##### Orders
+```ruby
+    t.decimal "total"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "buyer_username"
+    t.string "seller_username"
+    t.bigint "item_id"
+    t.bigint "user_id"
+```
+
+##### Items
+```ruby
+    t.string "title"
+    t.text "description"
+    t.integer "price"
+    t.string "category"
+    t.boolean "availability"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_items_on_user_id"
+```
+
+##### Active Storage Attachments
+```ruby
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+```
+
+##### Active Storage Blobs
+```ruby
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+```
 
 #### R20.	Describe the way tasks are allocated and tracked in your project
 
