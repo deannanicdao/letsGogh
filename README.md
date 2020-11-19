@@ -2,7 +2,7 @@
 # *Let's Gogh* :paintbrush: 
 ### Deanna Nicdao :sunflower: 
 
-### The Problem :(
+### The Problem 
 It's been known that the road to success in art is a narrow one, as it depends on the subjective interests of the market. This creates a tough environment for artists to successfully sell their artworks let alone acquire the funds for real estate to host art exhibitions and maintain a rental studio space. One approach to minimise costs is for artists is to exhibit their work online and create home studio spaces.
 
 The internet has led to the increased exposure of art to a broader, even global, audience on several platforms, such as Etsy and Shopify. Etsy is a creative marketplace where craft supplies, homemade goods and vintage items can be sold. In contrast, Shopify is an eCommerce platform where general goods can be sold and their marketing, sales and operations can be managed. With access to such platforms, more and more artists have embraced digital technology for its benefits of increasing their marketability and creating a convenient platform for their client interactions. 
